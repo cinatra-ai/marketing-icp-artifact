@@ -1,0 +1,33 @@
+{
+  "name": "@cinatra-ai/marketing-icp-artifact",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "cinatra": {
+    "apiVersion": "cinatra.ai/v1",
+    "kind": "artifact",
+    "dependencies": [],
+    "artifact": {
+      "accepts": {
+        "file": {
+          "mimeTypes": [
+            "text/markdown",
+            "text/plain",
+            "application/pdf"
+          ]
+        }
+      },
+      "skills": {
+        "authoring": [
+          "@cinatra-ai/marketing-icp-artifact:marketing-icp-author"
+        ],
+        "matchers": [
+          "@cinatra-ai/marketing-icp-artifact:marketing-icp-matcher"
+        ]
+      },
+      "matcherConfidenceThreshold": 0.7
+    }
+  }
+}
