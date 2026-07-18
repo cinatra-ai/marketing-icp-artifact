@@ -32,4 +32,27 @@ export const marketingIcpArtifactManifest: SemanticArtifactManifest = {
     matchers: ["@cinatra-ai/marketing-icp-artifact:marketing-icp-matcher"],
   },
   matcherConfidenceThreshold: 0.7,
+  // Explicit type declaration (epic #1785 entry 95): the pack DECLARES the one
+  // object type it owns rather than relying on the retired `<pkg>:artifact`
+  // auto-derivation. `@cinatra-ai/marketing-icp:profile` is a dedicated claim —
+  // an authored, editable ICP markdown deliverable (draftable, content-snapshot,
+  // artifact-safe projection). The namespace differs from the package name, so a
+  // self-contained inline JSON Schema ships with the claim.
+  objectTypes: [
+    {
+      type: "@cinatra-ai/marketing-icp:profile",
+      claim: "dedicated",
+      dispositions: {
+        projection: "artifact-safe",
+        pinnable: true,
+        snapshotPolicy: "content",
+        sensitivity: "normal",
+        mutability: "draftable",
+      },
+      schema: {
+        type: "object",
+        additionalProperties: true,
+      },
+    },
+  ],
 };

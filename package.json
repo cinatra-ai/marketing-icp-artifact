@@ -40,7 +40,24 @@
           "@cinatra-ai/marketing-icp-artifact:marketing-icp-matcher"
         ]
       },
-      "matcherConfidenceThreshold": 0.7
+      "matcherConfidenceThreshold": 0.7,
+      "objectTypes": [
+        {
+          "type": "@cinatra-ai/marketing-icp:profile",
+          "claim": "dedicated",
+          "dispositions": {
+            "projection": "artifact-safe",
+            "pinnable": true,
+            "snapshotPolicy": "content",
+            "sensitivity": "normal",
+            "mutability": "draftable"
+          },
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      ]
     }
   }
 }
