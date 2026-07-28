@@ -3,8 +3,9 @@ import type { SemanticArtifactManifest } from "@cinatra-ai/sdk-extensions";
 // `@cinatra-ai/marketing-icp-artifact` is the Ideal Customer Profile (ICP)
 // artifact extension. It models a semantic work product describing the target
 // buyer persona / firmographics / pain points / budget criteria that a company
-// sells INTO. Bytes-only matcher classification uses the co-located
-// `marketing-icp-matcher` SKILL.
+// sells INTO. Bytes-only matcher classification uses the `marketing-icp-matcher`
+// SKILL, which ships in its own `@cinatra-ai/marketing-icp-matcher-skill`
+// provider package and is named here by its skills-catalog id.
 //
 // Why no `connectorRef:`: connector-form classification is not part of this
 // artifact manifest.
@@ -15,12 +16,14 @@ import type { SemanticArtifactManifest } from "@cinatra-ai/sdk-extensions";
 //
 // The authoring skill is the reference / exemplar for the chat-driven authoring
 // path; the `chat-create-artifact` chat skill follows this skill when the user
-// asks "create me an ICP for X".
+// asks "create me an ICP for X". It ships in its own
+// `@cinatra-ai/marketing-icp-authoring-skill` provider package.
 //
-// The manifest is mirrored in package.json `cinatra.artifact`; this typed
-// export is the developer-ergonomic source of truth that
-// `parseSemanticArtifactManifest` accepts. The pack's parity test pins the
-// two byte-equal so they cannot drift.
+// The manifest of record is package.json `cinatra.artifact` — what the
+// object-registry bridge reads at registration time. This typed export is its
+// developer-ergonomic mirror, the shape `parseSemanticArtifactManifest`
+// accepts. The pack's parity test pins the two structurally equal so they
+// cannot diverge.
 export const marketingIcpArtifactManifest: SemanticArtifactManifest = {
   accepts: {
     file: {
@@ -28,8 +31,10 @@ export const marketingIcpArtifactManifest: SemanticArtifactManifest = {
     },
   },
   skills: {
-    authoring: ["@cinatra-ai/marketing-icp-artifact:marketing-icp-author"],
-    matchers: ["@cinatra-ai/marketing-icp-artifact:marketing-icp-matcher"],
+    authoring: [
+      "@cinatra-ai/marketing-icp-authoring-skill:marketing-icp-authoring",
+    ],
+    matchers: ["@cinatra-ai/marketing-icp-matcher-skill:marketing-icp-matcher"],
   },
   matcherConfidenceThreshold: 0.7,
   // Explicit type declaration (epic #1785 entry 95): the pack DECLARES the one
